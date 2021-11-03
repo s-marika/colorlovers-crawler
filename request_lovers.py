@@ -30,30 +30,32 @@ with open(result_data_colors_path, 'w') as fwc, open(result_data_eval_path, 'w')
     for page in range(page_num):
         url = f"https://www.colourlovers.com/palettes/most-favorites/all-time/meta?page={page + 1}"
         driver.get(url)
-        sleep(2) # wait for browser create page elements
-        
+        sleep(2)  # wait for browser create page elements
+
         html = driver.page_source.encode('utf-8')
-        ##print(html)
+        # print(html)
 
         # scrape color data
         soup = BeautifulSoup(html, "html.parser")
         rows = soup.select("div.detail-row")
-        ##print(rows)
+        # print(rows)
         for r in rows:
             cs_wrapper = r.select("a.palette")[0]
             cs = cs_wrapper.select("div.c")
-            writer_c.writerow([re.search(r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() if re.search(r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() else None for color in cs])
-            #colors.append([re.search(r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() if re.search(r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() else None for color in cs])
-            
+            writer_c.writerow([re.search(r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() if re.search(
+                r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() else None for color in cs])
+            # colors.append([re.search(r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() if re.search(r'#[a-zA-Z0-9]{3,6}', color['style'].split(";")[-2]).group() else None for color in cs])
+
             meta_d = r.select('div.meta > div.right-col')
-            writer_e.writerow([data.select_one('h4').text if data.select_one('h4').text else None for data in meta_d][::-1])
+            writer_e.writerow([data.select_one('h4').text if data.select_one(
+                'h4').text else None for data in meta_d][::-1])
             #evals.append([data.select_one('h4').text if data.select_one('h4').text else None for data in meta_d][::-1])
         ##print("accsess to url: ", url)
-        ##print(colors)
+        # print(colors)
 
 # confirm color data
-##print(colors)
-##print(evals)
+# print(colors)
+# print(evals)
 ##print("colors: ", len(colors))
 
 # close driver

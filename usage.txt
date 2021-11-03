@@ -1,9 +1,0 @@
-usage: python request_lovers.py
-
-input: none
-
-output:
-    color palettes : path=result_data_colors_path (default: "./result_color_palletes.csv")
-    palette evaluation : path=result_data_eval_path (default: "./result_color_eval.csv")
-    
-    -> The lines in each file correspond
